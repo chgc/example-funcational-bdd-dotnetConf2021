@@ -22,33 +22,32 @@ type Customer =
       IsEligible: bool
       IsRegistered: bool }
 
-let calculateTotal (customer: Customer) (spend: decimal) : decimal =
+let calculateTotal customer spend =
     let discount =
         if customer.IsEligible && spend >= 100M then
             spend * 0.1M
         else
             0.0M
 
-    let total = spend - discount
-    total
+    spend - discount
 
 
-let john: Customer =
+let john =
     { Id = "John"
       IsEligible = true
       IsRegistered = true }
 
-let mary: Customer =
+let mary =
     { Id = "Mary"
       IsEligible = true
       IsRegistered = true }
 
-let richard: Customer =
+let richard =
     { Id = "Richard"
       IsEligible = false
       IsRegistered = false }
 
-let sarah: Customer =
+let sarah =
     { Id = "Sarah"
       IsEligible = false
       IsRegistered = false }
