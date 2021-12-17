@@ -17,40 +17,41 @@
 // |Richard    |  100.00|  100.00|
 // |Sarah      |  100.00|  100.00|
 
+// type Customer =
+//     { Id: string
+//       IsEligible: bool
+//       IsRegistered: bool }
+
+type RegisteredCustomer = { Id: string; IsEligible: bool }
+type UnregisteredCustomer = { Id: string }
+
 type Customer =
-    { Id: string
-      IsEligible: bool
-      IsRegistered: bool }
+    | Registered of RegisteredCustomer
+    | Guest of UnregisteredCustomer
 
 let calculateTotal customer spend =
     let discount =
-        if customer.IsEligible && spend >= 100M then
-            spend * 0.1M
-        else
-            0.0M
+        match customer with
+        | Registered customer ->
+            if customer.IsEligible && spend >= 100M then
+                spend * 0.1M
+            else
+                0.0M
+        | Guest _ -> 0.0M
 
     spend - discount
 
 
 let john =
-    { Id = "John"
-      IsEligible = true
-      IsRegistered = true }
+    Registered { Id = "John"; IsEligible = true }
 
 let mary =
-    { Id = "Mary"
-      IsEligible = true
-      IsRegistered = true }
+    Registered { Id = "Mary"; IsEligible = true }
 
 let richard =
-    { Id = "Richard"
-      IsEligible = false
-      IsRegistered = false }
+    Registered { Id = "Richard"; IsEligible = false }
 
-let sarah =
-    { Id = "Sarah"
-      IsEligible = false
-      IsRegistered = false }
+let sarah = Guest { Id = "Sarah" }
 
 
 let assertJohn = calculateTotal john 100.0M = 90.0M
