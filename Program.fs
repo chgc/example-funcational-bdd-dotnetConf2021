@@ -17,14 +17,10 @@
 // |Richard    |  100.00|  100.00|
 // |Sarah      |  100.00|  100.00|
 
-
-type RegisteredCustomer = { Id: string }
-type UnregisteredCustomer = { Id: string }
-
 type Customer =
-    | EligibleRegistered of RegisteredCustomer
-    | Registered of RegisteredCustomer
-    | Guest of UnregisteredCustomer
+    | EligibleRegistered of Id: string
+    | Registered of Id: string
+    | Guest of Id: string
 
 let calculateTotal customer spend =
     let discount =
@@ -35,13 +31,13 @@ let calculateTotal customer spend =
     spend - discount
 
 
-let john = EligibleRegistered { Id = "John" }
+let john = EligibleRegistered "John"
 
-let mary = EligibleRegistered { Id = "Mary" }
+let mary = EligibleRegistered "Mary"
 
-let richard = Registered { Id = "Richard" }
+let richard = Registered "Richard"
 
-let sarah = Guest { Id = "Sarah" }
+let sarah = Guest "Sarah"
 
 
 let assertJohn = calculateTotal john 100.0M = 90.0M
