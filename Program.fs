@@ -32,11 +32,8 @@ type Customer =
 let calculateTotal customer spend =
     let discount =
         match customer with
-        | Registered customer ->
-            if customer.IsEligible && spend >= 100M then
-                spend * 0.1M
-            else
-                0.0M
+        | Registered customer when customer.IsEligible && spend >= 100M -> spend * 0.1M
+        | Registered _ -> 0.0M
         | Guest _ -> 0.0M
 
     spend - discount
